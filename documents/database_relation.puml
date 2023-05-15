@@ -44,7 +44,8 @@ entity "note" as note {
   *book_id : number <<FK>>
   *user_id : number <<FK>>
   *event_id : number <<FK>>
-  description : text
+  *title: text
+  *description : text
 }
 
 entity "review" as review {
@@ -52,7 +53,8 @@ entity "review" as review {
   --
   *user_id : number <<FK>>
   *book_id : number <<FK>>
-  description : text
+  *title : text
+  *description : text
 }
 
 book ||..o{ event
