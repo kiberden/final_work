@@ -4,6 +4,11 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 
+def max_value_current_year(value: str):
+    """ Проверка текущего года и введенного в поле. """
+    return MaxValueValidator(Book.current_year())(value)
+
+
 class Book(models.Model):
     """ Модель книга. """
     verbose_name = "Задача"
@@ -14,10 +19,10 @@ class Book(models.Model):
         """ Получаем текущий год. """
         return datetime.date.today().year
 
-    @staticmethod
-    def max_value_current_year(value):
-        """ Проверка текущего года и введенного в поле. """
-        return MaxValueValidator(Book.current_year())(value)
+    # @staticmethod
+    # def max_value_current_year(value: str):
+    #     """ Проверка текущего года и введенного в поле. """
+    #     return MaxValueValidator(Book.current_year())(value)
 
     title = models.CharField(max_length=120, null=False)
     description = models.CharField(max_length=260, null=False)

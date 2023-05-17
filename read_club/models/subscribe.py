@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from app.read_club.models.event import Event
+from read_club.models.event import Event
 
 
 class Subscribe(models.Model):
@@ -9,7 +9,7 @@ class Subscribe(models.Model):
     verbose_name = "Подписки"
     ordering = ["-created"]
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, null=False)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=False)
     event = models.OneToOneField(Event, on_delete=models.SET_NULL, null=True)
 
     def __str__(self) -> str:

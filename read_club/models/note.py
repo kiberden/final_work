@@ -13,9 +13,9 @@ class Note(models.Model):
 
     title = models.CharField(max_length=120, null=False)
     description = models.TextField(null=False)
-    book = models.OneToOneField(Book, on_delete=models.DO_NOTHING, primary_key=True)
+    book = models.OneToOneField(Book, on_delete=models.DO_NOTHING)
     event = models.OneToOneField(Event, on_delete=models.DO_NOTHING)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         """Строчное представление объекта."""

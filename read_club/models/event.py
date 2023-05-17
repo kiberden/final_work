@@ -2,7 +2,7 @@ from datetime import date
 
 from django.db import models
 
-from app.read_club.models.book import Book
+from read_club.models.book import Book
 
 
 class Event(models.Model):
@@ -12,7 +12,7 @@ class Event(models.Model):
     ordering = ["-updated", "-created"]
 
     title = models.CharField(max_length=120, null=False)
-    book = models.OneToOneField(Book, on_delete=models.PROTECT, primary_key=True, null=False)
+    book = models.OneToOneField(Book, on_delete=models.PROTECT, null=False)
     start = models.DateField(default=date.today, null=False)
     finish = models.DateField(null=False)
 
