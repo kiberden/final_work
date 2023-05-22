@@ -12,9 +12,14 @@ class Review(models.Model):
 
     title = models.CharField(max_length=120, null=False)
     description = models.TextField(null=False)
-    user = models.OneToOneField(User, on_delete=models.DO_NOTHING, null=False)
-    book = models.OneToOneField(Book, on_delete=models.CASCADE, null=False)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=False)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, null=False)
 
     def __str__(self) -> str:
         """Строчное представление объекта."""
-        return f"{self.book.title} - {self.title}: {self.description[1:30]}..."
+        book_title = '---'
+
+        if self.book:
+            book_title = self.book.title
+
+        return f"{book_title} - {self.title}: {self.description[1:30]}..."

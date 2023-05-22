@@ -11,12 +11,17 @@ class Note(models.Model):
 
     ordering = ["-updated", "-created"]
 
-    title = models.CharField(max_length=120, null=False)
-    description = models.TextField(null=False)
-    book = models.OneToOneField(Book, on_delete=models.DO_NOTHING)
+    title = models.CharField(max_length=120, null=False, blank=True)
+    description = models.TextField(null=False, blank=True)
+    book = models.ForeignKey(Book, on_delete=models.DO_NOTHING)
     event = models.OneToOneField(Event, on_delete=models.DO_NOTHING)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         """Строчное представление объекта."""
-        return f"{self.book.title} - {self.title}: {self.description[1:22]}..."
+        book_title = '---'
+
+        if self.book:
+            book_title = self.book.title
+
+        return f"{book_title} - {self.title}: {self.description[1:22]}..."

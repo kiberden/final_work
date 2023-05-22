@@ -19,21 +19,17 @@ class Book(models.Model):
         """ Получаем текущий год. """
         return datetime.date.today().year
 
-    # @staticmethod
-    # def max_value_current_year(value: str):
-    #     """ Проверка текущего года и введенного в поле. """
-    #     return MaxValueValidator(Book.current_year())(value)
-
-    title = models.CharField(max_length=120, null=False)
-    description = models.CharField(max_length=260, null=False)
-    preview = models.FileField(upload_to='preview', max_length=25)
-    author = models.CharField(max_length=120, null=False)
+    title = models.CharField(max_length=120, null=False, unique=True, blank=True)
+    description = models.TextField(max_length=260, null=False, blank=True)
+    preview = models.ImageField(upload_to='static/previews', null=False)
+    author = models.CharField(max_length=120, null=False, blank=True)
     published = models.IntegerField(
         default=current_year(),
-        validators=[MinValueValidator(1990), max_value_current_year]
+        validators=[MinValueValidator(1990), max_value_current_year],
+        blank=True
     )
-    publisher = models.CharField(max_length=120, null=False)
+    publisher = models.CharField(max_length=120, null=False, blank=True)
 
     def __str__(self) -> str:
         """Строчное представление объекта."""
-        return f"{self.author} {self.title} {self.publisher} ({self.published} г. издания)"
+        return f"{self.title} {self.author} издательство {self.publisher} {self.published} г."

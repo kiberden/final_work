@@ -11,11 +11,16 @@ class Event(models.Model):
 
     ordering = ["-updated", "-created"]
 
-    title = models.CharField(max_length=120, null=False)
-    book = models.OneToOneField(Book, on_delete=models.PROTECT, null=False)
-    start = models.DateField(default=date.today, null=False)
-    finish = models.DateField(null=False)
+    title = models.CharField(max_length=120, null=False, blank=True)
+    book = models.OneToOneField(Book, on_delete=models.PROTECT, null=False, blank=True)
+    start = models.DateField(default=date.today, null=False, blank=True)
+    finish = models.DateField(null=False, blank=True)
 
     def __str__(self) -> str:
         """Строчное представление объекта."""
-        return f"{self.title} (с {self.start} по {self.finish}), книга {self.book.title}"
+        book_title = '---'
+
+        if self.book:
+            book_title = self.book.title
+
+        return f"{self.title} (с {self.start} по {self.finish}), книга {book_title}"
