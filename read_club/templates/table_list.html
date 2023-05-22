@@ -24,15 +24,15 @@
                                         <td class="whitespace-nowrap px-6 py-4">{{ item.start }}</td>
                                         <td class="whitespace-nowrap px-6 py-4">{{ item.finish }}</td>
                                         <td class="whitespace-nowrap px-6 py-4">
-                                            {% if object.is_subscribe %}
+                                            {% if item.is_subscribe %}
                                                 Вы подписаны
                                             {% elif item.is_finished%}
                                                 Событие завершилось
                                             {% else %}
-                                                <form method="post" action="/subscribes/">
+                                                <form method="POST" action="/subscribes/create/" enctype="multipart/form-data">
                                                 {% csrf_token %}
-                                                <input type="hidden" name="event" value="{{ item.pk }}" />
-                                                <input type="hidden" name="book" value="{{ item.book.pk }}" />
+                                                <input type="hidden" name="event" value="{{ item.id }}" />
+{#                                                <input type="hidden" name="user" value="{{ view.request.user.id }}" />#}
 
                                                 <!--Submit button-->
                                                 <button type="submit"

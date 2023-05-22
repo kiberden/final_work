@@ -1,10 +1,23 @@
 from django import forms
+from read_club.models import Subscribe, Note, Review
 
 
-class SubscribeForm(forms.Form):
-    event_id = forms.IntegerField(widget=forms.HiddenInput)
-    book_id = forms.IntegerField(widget=forms.HiddenInput)
+class SubscribeForm(forms.ModelForm):
+    """ Форма создания подписки. """
+    class Meta:
+        model = Subscribe
+        fields = ('event', 'user')
 
-    def subscribe(self):
-        # send email using the self.cleaned_data dictionary
-        pass
+
+class NoteForm(forms.ModelForm):
+    """ Форма создания и изменения заметок. """
+    class Meta:
+        model = Note
+        exclude = ('user', )
+
+
+class ReviewForm(forms.ModelForm):
+    """ Форма создания и обновления рецензии. """
+    class Meta:
+        model = Review
+        exclude = ('user', 'is_approve')

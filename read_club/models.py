@@ -149,4 +149,8 @@ class Subscribe(models.Model):
 
     def is_event_has_enough_notes(self):
         """ Проверяем, что пользователь не оставит больше заметок, чем указано в моделе. """
-        return Note.objects.filter(event=self.event, user=self.user).count() >= Note.personal_count
+        return self.get_event_notes().count() >= Note.personal_count
+
+    def get_event_notes(self):
+        """ Получить все заметки пользователя по событию. """
+        return Note.objects.filter(event=self.event, user=self.user)
