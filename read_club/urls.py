@@ -7,7 +7,7 @@ urlpatterns = [
     path('books/<int:pk>/', views.BookDetailView.as_view()),
 
     path('events/', views.EventListView.as_view()),
-    path('events/<int:pk>', views.EventDetailView.as_view()),
 
-    path('subscribes/', views.SubscribeListView.as_view())
+    path('subscribes/', views.SubscribeListView.as_view()),
+    path('subscribes/<int:pk>/', views.SubscribeDetailView.as_view())
 ]

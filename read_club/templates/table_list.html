@@ -21,10 +21,28 @@
                                 {% for item in object_list %}
                                     <tr class="border-b dark:border-neutral-500">
                                         <td class="whitespace-nowrap px-6 py-4 font-medium">{{ item.book.title }}</td>
-                                        <td class="whitespace-nowrap px-6 py-4">{{ item.start_date }}</td>
-                                        <td class="whitespace-nowrap px-6 py-4">{{ item.finish_date }}</td>
+                                        <td class="whitespace-nowrap px-6 py-4">{{ item.start }}</td>
+                                        <td class="whitespace-nowrap px-6 py-4">{{ item.finish }}</td>
                                         <td class="whitespace-nowrap px-6 py-4">
-                                            <form></form>
+                                            {% if object.is_subscribe %}
+                                                Вы подписаны
+                                            {% elif item.is_finished%}
+                                                Событие завершилось
+                                            {% else %}
+                                                <form method="post" action="/subscribes/">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="event" value="{{ item.pk }}" />
+                                                <input type="hidden" name="book" value="{{ item.book.pk }}" />
+
+                                                <!--Submit button-->
+                                                <button type="submit"
+                                                        class="inline-block rounded bg-purple-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                                                        data-te-ripple-init
+                                                        data-te-ripple-color="light">
+                                                    Подписаться
+                                                </button>
+                                            </form>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}

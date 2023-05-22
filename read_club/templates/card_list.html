@@ -28,9 +28,8 @@
                         <small>издательство {{ item.publisher }} <u>{{ item.published }} г.</u></small>
                     </p>
                     <p class="text-gray-500 mb-4">{{ item.description }}</p>
-                    <a href="{{ item.detail_url }}"
-                       class="text-blue-400"
-                    >Подробнее...</a>
+                    <a href="/books/{{ item.pk }}/"
+                       class="text-blue-400">Подробнее...</a>
                 </div>
             </div>
         {% endfor %}

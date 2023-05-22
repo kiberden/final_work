@@ -5,7 +5,7 @@ from django.conf import settings
 import django.core.validators
 from django.db import migrations, models
 import django.db.models.deletion
-import read_club.models.book
+import read_club.models
 
 
 class Migration(migrations.Migration):
@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(blank=True, max_length=260)),
                 ('preview', models.ImageField(upload_to='static/previews')),
                 ('author', models.CharField(blank=True, max_length=120)),
-                ('published', models.IntegerField(blank=True, default=2023, validators=[django.core.validators.MinValueValidator(1990), read_club.models.book.max_value_current_year])),
+                ('published', models.IntegerField(blank=True, default=2023, validators=[django.core.validators.MinValueValidator(1990), read_club.models.max_value_current_year])),
                 ('publisher', models.CharField(blank=True, max_length=120)),
             ],
         ),

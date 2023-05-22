@@ -1,0 +1,11 @@
+{% extends 'base.html'  %}
+
+{% block content %}
+    {% if not object.event.is_finished and not object.is_event_has_enough_notes %}
+        Форма Оставляем заметки
+    {% elif object.event.is_finished and not object.is_book_has_review %}
+        Форма Оставляем отзыв
+    {% endif %}
+
+    Тут список оставленных заметок
+{% endblock %}
