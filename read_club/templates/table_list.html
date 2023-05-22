@@ -1,0 +1,39 @@
+<div class="container my-24 px-6 mx-auto">
+    <!-- Section: Design Block -->
+    <section class="mb-32 text-gray-800 text-center md:text-left">
+
+        <h1 class="text-3xl font-bold mb-12 text-center">{{ h1_title }}</h1>
+
+        <div class="flex flex-col">
+            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                    <div class="overflow-hidden">
+                        <table class="min-w-full text-center text-sm font-light">
+                            <thead class="border-b font-medium dark:border-neutral-500">
+                                <tr>
+                                    <th scope="col" class="px-6 py-4">Книга</th>
+                                    <th scope="col" class="px-6 py-4">Дата начала</th>
+                                    <th scope="col" class="px-6 py-4">Дата конца</th>
+                                    <th scope="col" class="px-6 py-4">Хочу участвовать!</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in object_list %}
+                                    <tr class="border-b dark:border-neutral-500">
+                                        <td class="whitespace-nowrap px-6 py-4 font-medium">{{ item.book.title }}</td>
+                                        <td class="whitespace-nowrap px-6 py-4">{{ item.start_date }}</td>
+                                        <td class="whitespace-nowrap px-6 py-4">{{ item.finish_date }}</td>
+                                        <td class="whitespace-nowrap px-6 py-4">
+                                            <form></form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
