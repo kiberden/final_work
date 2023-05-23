@@ -1,0 +1,16 @@
+<!-- Section: Design Block -->
+<section class="mb-32 text-gray-800">
+    <h5 class="text-xl font-semibold text-center mb-10 md:mb-6">Всего: {{ object_list.count }}</h5>
+
+    {% for item in object_list %}
+        <!-- Comment -->
+        <div class="flex flex-wrap mb-12 md:mb-10">
+            <div class="grow-0 shrink-0 basis-auto w-10/12 pl-4 md:pl-6">
+                <p class="font-semibold mb-3">{{ item.title }}</p>
+                <p>{{ item.description }}</p>
+                <p class="mt-10 text-xs text-neutral-500 dark:text-neutral-300">{{ item.user }}</p>
+            </div>
+        </div>
+    {% endfor %}
+</section>
+<!-- Section: Design Block -->

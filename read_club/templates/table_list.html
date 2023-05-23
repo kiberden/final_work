@@ -1,0 +1,57 @@
+<div class="container my-24 px-6 mx-auto">
+    <!-- Section: Design Block -->
+    <section class="mb-32 text-gray-800 text-center md:text-left">
+
+        <h1 class="text-3xl font-bold mb-12 text-center">{{ h1_title }}</h1>
+
+        <div class="flex flex-col">
+            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                    <div class="overflow-hidden">
+                        <table class="min-w-full text-center text-sm font-light">
+                            <thead class="border-b font-medium dark:border-neutral-500">
+                                <tr>
+                                    <th scope="col" class="px-6 py-4">Книга</th>
+                                    <th scope="col" class="px-6 py-4">Дата начала</th>
+                                    <th scope="col" class="px-6 py-4">Дата конца</th>
+                                    <th scope="col" class="px-6 py-4">Хочу участвовать!</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in object_list %}
+                                    <tr class="border-b dark:border-neutral-500">
+                                        <td class="whitespace-nowrap px-6 py-4 font-medium">{{ item.book.title }}</td>
+                                        <td class="whitespace-nowrap px-6 py-4">{{ item.start }}</td>
+                                        <td class="whitespace-nowrap px-6 py-4">{{ item.finish }}</td>
+                                        <td class="whitespace-nowrap px-6 py-4">
+                                            {% if item.is_subscribe %}
+                                                Вы подписаны
+                                            {% elif item.is_finished%}
+                                                Событие завершилось
+                                            {% else %}
+                                                <form method="POST" action="/subscribes/create/" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="event" value="{{ item.id }}" />
+                                                <input type="hidden" name="user" value="{{ view.request.user.id }}" />
+
+                                                <!--Submit button-->
+                                                <button type="submit"
+                                                        class="inline-block rounded bg-purple-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                                                        data-te-ripple-init
+                                                        data-te-ripple-color="light">
+                                                    Подписаться
+                                                </button>
+                                            </form>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>

@@ -10,3 +10,9 @@ up:
 
 stop:
 	docker-compose stop
+
+migrate:
+	docker-compose exec app python manage.py migrate
+
+seed:
+	docker-compose exec app python manage.py database_seed

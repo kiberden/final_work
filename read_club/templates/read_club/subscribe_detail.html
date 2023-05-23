@@ -1,0 +1,107 @@
+{% extends 'base.html'  %}
+
+{% block content %}
+    <div class="container my-24 px-6 mx-auto relative bg-grey-100" data-te-input-wrapper-init>
+        <!-- Section: Design Block -->
+        <section class="mb-32 text-gray-800 text-center md:text-left">
+            <div>
+                {% if not object.event.is_finished and not object.is_event_has_enough_notes %}
+                    <h5 class="text-xl font-semibold text-center mb-10 md:mb-6">Оставить заметку</h5>
+                    <form class="mt-8" method="post" action="/notes/create/" enctype="multipart/form-data">
+                        {%  csrf_token %}
+                        <div class="mb-6">
+                            <input type="text"
+                                   id="noteTitle"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   name="title"
+                                   placeholder="Заголовок заметки"
+                                   required>
+                        </div>
+                        <div class="mb-6">
+                            <textarea id="noteDescription"
+                                      rows="4"
+                                      name="description"
+                                      class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                      placeholder="Оставьте заметку тут..."></textarea>
+                        </div>
+                        <input type="hidden" name="event" value="{{ object.event.id }}">
+                        <input type="hidden" name="book" value="{{ object.event.book.id }}">
+                        <input type="hidden" name="user" value="{{ view.request.user.id }}">
+                        <button type="submit"
+                                class="text-white bg-blue-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Сохранить</button>
+                    </form>
+                {% elif object.event.is_finished and not object.is_book_has_review %}
+                    <h5 class="text-xl font-semibold text-center mb-10 md:mb-6">Оставить отзыв</h5>
+                    <form class="mt-8" method="post" action="/reviews/create/" enctype="multipart/form-data">
+                        {%  csrf_token %}
+                        <div class="mb-6">
+                            <input type="text"
+                                   id="reviewTitle"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   name="title"
+                                   placeholder="Заголовок заметки"
+                                   required>
+                        </div>
+                        <div class="mb-6">
+                            <textarea id="reviewDescription"
+                                      rows="8"
+                                      name="description"
+                                      class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                      placeholder="Оставьте отзыв тут..."></textarea>
+                        </div>
+
+                        <input type="hidden" name="book" value="{{ object.event.book.id }}">
+                        <input type="hidden" name="user" value="{{ view.request.user.id }}">
+
+                        <!--Submit button-->
+                        <button type="submit"
+                                class="text-white bg-blue-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Сохранить</button>
+                    </form>
+                {% endif %}
+            </div>
+        </section>
+        {% if object.is_book_has_review %}
+            <section class="mb-32 text-gray-800">
+                <div class="block rounded-lg shadow-lg bg-white">
+                    <div class="flex flex-wrap items-center">
+                        <div class="grow-0 shrink-0 basis-auto w-full xl:w-8/12">
+                            <div class="px-6 py-12 md:px-12">
+                                {% if object.get_book_review.is_approve %}
+                                    <p class="uppercase text-green-600 font-bold mb-6 flex items-center">
+                                        Рецензия принята
+                                {% else %}
+                                    <p class="uppercase text-red-600 font-bold mb-6 flex items-center">
+                                        Ожидает проверки
+                                    {% endif %}
+                                </p>
+                                <h2 class="text-2xl font-bold mb-4">{{ object.get_book_review.title }}</h2>
+                                <p class="text-gray-500 mb-6">{{ object.get_book_review.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+        <section class="mb-32 text-gray-800">
+            <h5 class="text-xl font-semibold text-center mb-10 md:mb-6">Заметки: {{ object.get_event_notes.count }}</h5>
+            <div class="flex flex-wrap mb-12 md:mb-0">
+                {% for item in object.get_event_notes %}
+                    <div class="grow-0 shrink-0 basis-auto w-10/12 pl-4 md:pl-6 mb-10">
+                        <p class="font-semibold mb-3">{{ item.title }}</p>
+                        <p>{{ item.description }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+    <script>
+        import {
+            Input,
+            initTE,
+        } from "tw-elements";
+
+        initTE({ Input });
+    </script>
+{% endblock %}
