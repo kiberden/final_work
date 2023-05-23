@@ -1,0 +1,72 @@
+@startuml
+
+' hide the spot
+' hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "book" as book {
+  *id : number <<generated>>
+  --
+  *title : text
+  *description : text
+  *preview : file
+  *author : text
+  *published : text
+  *publisher : text
+  *created : datetime
+  *updated : datetime
+}
+
+entity "user" as user {
+    *id : number <<generated>>
+}
+
+entity "event" as event {
+  *id : number <<generated>>
+  --
+  *title : text
+  *book_id : number <<FK>>
+  *start : datetime
+  *finish : datetime
+}
+
+entity "subscribe" as subscribe {
+    *id : number <<generated>>
+    *user_id : number <<FK>>
+    *event_id : number <<FK>>
+}
+
+entity "note" as note {
+  *id : number <<generated>>
+  --
+  *book_id : number <<FK>>
+  *user_id : number <<FK>>
+  *event_id : number <<FK>>
+  *title: text
+  *description : text
+}
+
+entity "review" as review {
+  *id : number <<generated>>
+  --
+  *user_id : number <<FK>>
+  *book_id : number <<FK>>
+  *title : text
+  *description : text
+}
+
+book ||..o{ event
+
+subscribe }o..|{ user
+subscribe }o..|{ book
+
+note }o..|{ book
+note }o..|{ user
+note }o..|{ event
+
+review |o..o{ book
+review |o..o{ user
+
+@enduml
