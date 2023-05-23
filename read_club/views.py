@@ -1,8 +1,5 @@
 import datetime
-from time import timezone
-
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView, FormView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView
 
 from read_club.forms import SubscribeForm, NoteForm, ReviewForm
 from read_club.models import Book, Event, Subscribe, Note, Review
@@ -11,16 +8,6 @@ from read_club.models import Book, Event, Subscribe, Note, Review
 class BookListView(ListView):
     """ Представление списка книг. """
     model = Book
-
-    # def get_detail_url(self, item: Book) -> str:
-    #     """ Получаем сслку на детальный элемент. """
-    #     return f"/{self.model.__name__}/{item.id}/"
-
-    # def get_context_data(self, **kwargs):
-    #     """"""
-    #     context = super(BookListView, self).get_context_data(**kwargs)
-    #     # context['detail_url'] = context['foo_list'].filter(Country=64)
-    #     return context
 
 
 class BookDetailView(DetailView):
@@ -41,6 +28,11 @@ class EventListView(ListView,):
 class SubscribeListView(ListView):
     """ Представление списка подписок. """
     model = Subscribe
+
+    def get_queryset(self):
+        """ Модифицируем параметр выборк, добавляем фильтр по дате. """
+        queryset = super().get_queryset()
+        return queryset.order_by('-event__finish', )
 
 
 class SubscribeDetailView(DetailView):

@@ -15,7 +15,9 @@ class Command(BaseCommand):
             'published': lambda x: seeder.faker.year()
         })
         seeder.add_entity(Event, 4)
-        seeder.add_entity(User, 3)
+        seeder.add_entity(User, 3, {
+            'is_staff': False
+        })
         seeder.add_entity(Subscribe, 6)
         seeder.add_entity(Note, 20)
         seeder.add_entity(Review, 10)

@@ -145,7 +145,7 @@ class Subscribe(models.Model):
 
     def is_book_has_review(self):
         """ Проверяем, что книга уже имеет отзыв. """
-        return bool(Review.objects.filter(book=self.event.book, user=self.user).first())
+        return bool(self.get_book_review())
 
     def is_event_has_enough_notes(self):
         """ Проверяем, что пользователь не оставит больше заметок, чем указано в моделе. """
@@ -153,4 +153,8 @@ class Subscribe(models.Model):
 
     def get_event_notes(self):
         """ Получить все заметки пользователя по событию. """
-        return Note.objects.filter(event=self.event, user=self.user)
+        return Note.objects.filter(event=self.event, user=self.user).order_by('-id')
+
+    def get_book_review(self):
+        """ Получить отзыв о книге. """
+        return Review.objects.filter(book=self.event.book, user=self.user).first()

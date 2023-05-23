@@ -23,8 +23,6 @@ RUN poetry install --no-root
 
 COPY --chown=www:www .. .
 
-RUN mkdir media static
-
 CMD ["/bin/bash", ".docker/start.sh"]
 
 USER www

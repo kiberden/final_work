@@ -13,11 +13,11 @@ class NoteForm(forms.ModelForm):
     """ Форма создания и изменения заметок. """
     class Meta:
         model = Note
-        exclude = ('user', )
+        fields = "__all__"
 
 
 class ReviewForm(forms.ModelForm):
     """ Форма создания и обновления рецензии. """
     class Meta:
         model = Review
-        exclude = ('user', 'is_approve')
+        exclude = ('is_approve',)
