@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
+from read_club.middleware import get_current_user
+
 
 def max_value_current_year(value: str):
     """ Проверка текущего года и введенного в поле. """
@@ -71,7 +73,7 @@ class Event(models.Model):
 
     @property
     def is_subscribe(self):
-        return bool(Subscribe.objects.filter(event=self.pk).first())
+        return bool(Subscribe.objects.filter(event=self.pk, user=get_current_user()).first())
 
 
 class Note(models.Model):
