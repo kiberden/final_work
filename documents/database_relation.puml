@@ -55,6 +55,7 @@ entity "review" as review {
   *book_id : number <<FK>>
   *title : text
   *description : text
+  *is_approve : bool
 }
 
 book ||..o{ event
